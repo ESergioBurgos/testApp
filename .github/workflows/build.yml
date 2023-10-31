@@ -1,0 +1,43 @@
+name: build
+on: 
+  push:
+    paths:
+      - 'src/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: sergiob02/cloud-build:qt5
+    steps:
+      - uses: actions/checkout@v3
+      - name: System update and build guiEditor
+        run: |
+          export DEBIAN_FRONTEND=noninteractive && apt update && apt -y install git zip
+          export PATH=/usr/x86_64-w64-mingw32/bin:$PATH
+          mkdir build_win32
+          cd build_win32
+          qmake ../src/guiEditor_II.pro -recursive -config release
+          make
+          cd ..
+          export binName=guiEditor_II-testing-`date "+%Y%m%d"`
+          mkdir ${binName}
+          cp build_win32/guiEditor/release/guiEditor.exe ${binName}/guiEditor.exe
+          cp build_win32/guiEditor/guiEditor_en.qm ${binName}/guiEditor_en.qm
+          cp build_win32/guiEditor/guiEditor_sp.qm ${binName}/guiEditor_sp.qm
+          cp /usr/x86_64-w64-mingw32/bin/*.dll ${binName}/
+          cp /usr/x86_64-w64-mingw32/lib/*.dll ${binName}/
+          cp -R /usr/x86_64-w64-mingw32/plugins/iconengines ${binName}/
+          cp -R /usr/x86_64-w64-mingw32/plugins/imageformats ${binName}/
+          cp -R /usr/x86_64-w64-mingw32/plugins/platforms ${binName}/
+          cp -R /usr/x86_64-w64-mingw32/plugins/styles ${binName}/
+          mkdir ${binName}/translations
+          cp /usr/x86_64-w64-mingw32/translations/qt_*.qm ${binName}/translations/
+          cp /usr/lib/gcc/x86_64-w64-mingw32/9.3-posix/*.dll ${binName}/
+          zip -9 -r ${binName}-win32.zip ${binName}
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            *-win32.zip

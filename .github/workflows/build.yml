@@ -20,7 +20,7 @@ jobs:
           cd ..
           export binName=testApp-`date "+%Y%m%d"`
           mkdir ${binName}
-          cp build_win32/testApp/release/testApp.exe ${binName}/testApp.exe
+          cp build_win32/release/testApp.exe ${binName}/testApp.exe
           cp /usr/x86_64-w64-mingw32/bin/*.dll ${binName}/
           cp /usr/x86_64-w64-mingw32/lib/*.dll ${binName}/
           cp -R /usr/x86_64-w64-mingw32/plugins/iconengines ${binName}/

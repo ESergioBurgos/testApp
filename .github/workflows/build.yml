@@ -9,20 +9,18 @@ jobs:
     container: sergiob02/cloud-build:qt5
     steps:
       - uses: actions/checkout@v3
-      - name: System update and build guiEditor
+      - name: System update and build qtAppTest
         run: |
           export DEBIAN_FRONTEND=noninteractive && apt update && apt -y install git zip
           export PATH=/usr/x86_64-w64-mingw32/bin:$PATH
           mkdir build_win32
           cd build_win32
-          qmake ../src/guiEditor_II.pro -recursive -config release
+          qmake ../src/testApp.pro -recursive -config release
           make
           cd ..
-          export binName=guiEditor_II-testing-`date "+%Y%m%d"`
+          export binName=testApp-`date "+%Y%m%d"`
           mkdir ${binName}
-          cp build_win32/guiEditor/release/guiEditor.exe ${binName}/guiEditor.exe
-          cp build_win32/guiEditor/guiEditor_en.qm ${binName}/guiEditor_en.qm
-          cp build_win32/guiEditor/guiEditor_sp.qm ${binName}/guiEditor_sp.qm
+          cp build_win32/testApp/release/testApp.exe ${binName}/testApp.exe
           cp /usr/x86_64-w64-mingw32/bin/*.dll ${binName}/
           cp /usr/x86_64-w64-mingw32/lib/*.dll ${binName}/
           cp -R /usr/x86_64-w64-mingw32/plugins/iconengines ${binName}/

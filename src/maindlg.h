@@ -14,7 +14,6 @@ class mainDlg : public QDialog
 public:
   mainDlg(QWidget *parent = nullptr);
   ~mainDlg();
-
 private:
   Ui::mainDlg *ui;
 };

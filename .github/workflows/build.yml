@@ -37,4 +37,5 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           title: "Development Build"
-          files: testApp-*-win32.zip
+          files: |
+            *-win32.zip

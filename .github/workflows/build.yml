@@ -31,6 +31,10 @@ jobs:
           cp /usr/x86_64-w64-mingw32/translations/qt_*.qm ${binName}/translations/
           cp /usr/lib/gcc/x86_64-w64-mingw32/9.3-posix/*.dll ${binName}/
           zip -9 -r ${binName}-win32.zip ${binName}
+          echo "Home folder"
+          ls
+          echo "${binName} folder"
+          ls  ${binName}
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"

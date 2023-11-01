@@ -6,7 +6,7 @@ mainDlg::mainDlg(QWidget *parent)
   , ui(new Ui::mainDlg)
 {
   /* Un comentario diferente */
-  /* Otro comentario */
+  /* Otro comentario  */
   ui->setupUi(this);
 }
 

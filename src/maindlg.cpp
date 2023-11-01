@@ -6,7 +6,6 @@ mainDlg::mainDlg(QWidget *parent)
   , ui(new Ui::mainDlg)
 {
   ui->setupUi(this);
-  
 }
 
 mainDlg::~mainDlg()
